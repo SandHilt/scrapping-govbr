@@ -2,8 +2,10 @@
   "name": "scrapping-govbr",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/links.js",
+  "type": "module",
   "scripts": {
+    "start": "node --watch src/links.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,8 +19,10 @@
     "url": "https://github.com/carlos-dev/scrapping-govbr/issues"
   },
   "homepage": "https://github.com/carlos-dev/scrapping-govbr#readme",
+  "devDependencies": {
+    "@types/node": "^18.16.15"
+  },
   "dependencies": {
-    "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12"
   }
 }

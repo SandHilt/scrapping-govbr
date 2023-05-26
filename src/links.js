@@ -1,17 +1,32 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
+import { load } from 'cheerio';
 
-const url = 'https://www.gov.br/pt-br/noticias'
+const url = new URL('https://www.gov.br/pt-br/noticias');
 
-axios.get(url).then(response => {
-  const $ = cheerio.load(response.data);
-  const links = [];
+/** @type {RequestInit} */
+const options = {
+  method: 'GET',
+  headers: {
+    Accept: 'text/html',
+  },
+};
 
-  $('.summary.url').each((index, element) => {
-    const link = $(element).attr('href');
+async function generateLinks() {
+  try {
+    const result = await fetch(url, options);
+    if (!result.ok) throw new Error('Erro ao executar a requisição');
+    const html = await result.text();
+    const $ = load(html);
+    const links = $('.summary.url[href]').map((index, element) => {
+      const link = $(element).attr('href');
+      return link;
+    }).toArray();
 
-    links.push(link);
-  })
+    console.log(links);
+  } catch (e) {
+    console.error(e);
+  }
 
-  console.log(links);
-})
+  return [];
+}
+
+generateLinks();
